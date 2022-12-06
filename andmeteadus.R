@@ -44,7 +44,7 @@ andmed1.26 <- andmed1.25 %>% group_by(ToimNadalapaev) %>% summarise(mitu = sum(m
 andmed1.27 <- rbind(andmed1.26, andmed1.25)
 andmed1.28 <-  pivot_wider(andmed1.27, names_from = SyyteoLiik, values_from = mitu)
 andmed1.29 <- andmed1.28 %>% mutate(osakaal_Väär = VT/kokku, osakaal_Kuri = KT/kokku)
-
+andmed1.30 <-  andmed %>% group_by(KohtLiik) %>% summarise(mitu = n())
   
 #c("Harjumaa","Hiiumaa","Ida-Virumaa","Jõgevamaa",
 #"Järvamaa","Läänemaa","Lääne-Virumaa","Pärnumaa",
