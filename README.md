@@ -1,1 +1,2 @@
 # ids2022
+The data used for this project is from the Estonian Police and Border Guard Board’s website. The data is from 2012 up to 2021. After cleaning the data it contains 79294 rows. Most important attributes for our project are ToimKell (time of the offence), ToimNadalapaev (weekday of the offence), KohtLiik (type of place where the offence took place, for example a store or a street), MaakondNimetus (countie), ValdLinnNimetus (city or municipality), KohtNimetus (district)  and SyyteoLiik (type of offence).
