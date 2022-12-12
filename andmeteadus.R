@@ -93,7 +93,25 @@ andmed %>% group_by(MaakondNimetus, SyyteoLiik) %>% summarise(mitu = n()) %>%
   coord_polar("y", start=0)
 
 #  theme(legend.title=element_blank(),labels=c("Kuritegu", "Väärtegu"))
-
+andmed1.7$MaakondNimetus
+andmed1.7 %>%mutate(MaakondNimetus = case_when(MaakondNimetus == "Harju maakond"~ "Harjumaa",
+                                               MaakondNimetus == "Hiiu maakond"~ "Hiiumaa",
+                                               MaakondNimetus == "Ida-Viru maakond"~ "Ida-Virumaa",
+                                               MaakondNimetus == "Jõgeva maakond"~ "Jõgevamaa",
+                                               MaakondNimetus == "Järva maakond"~ "Järvamaa",
+                                               MaakondNimetus == "Lääne maakond"~ "Läänemaa",
+                                               MaakondNimetus == "Lääne-Viru maakond"~ "Lääne-Virumaa",
+                                               MaakondNimetus == "Põlva maakond"~ "Põlvamaa",
+                                               MaakondNimetus == "Pärnu maakond"~ "Pärnumaa",
+                                               MaakondNimetus == "Rapla maakond"~ "Raplamaa",
+                                               MaakondNimetus == "Saare maakond"~ "Saaremaa",
+                                               MaakondNimetus == "Tartu maakond"~ "Tartumaa",
+                                               MaakondNimetus == "Valga maakond"~ "Valgamaa",
+                                               MaakondNimetus == "Viljandi maakond"~ "Viljandimaa",
+                                               MaakondNimetus == "Võru maakond"~ "Võrumaa")) %>%  
+  ggplot(aes(x = fct_rev(fct_reorder(MaakondNimetus, n)), y= osakaal, fill = n)) + geom_bar(position = position_dodge(width = 0.8),stat="identity") + 
+  theme_bw() + theme(axis.text.x = element_text(angle=60, hjust=1)) + labs(x = "MaakondNimetus") + xlab("County") + ylab("Proportion")+guides(fill="none")
+my_breaks= c(500000, 100000, 30000, 20000,10000)
 
 res <- cor(andmed)
 round(res, 2)
