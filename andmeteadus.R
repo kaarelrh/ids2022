@@ -62,9 +62,35 @@ tunniga3 <-  tunniga %>% group_by(hour, SyyteoLiik) %>% summarise(mitu = n())
 andmed1.7 %>% ggplot(aes(x=MaakondNimetus, y = osakaal)) + geom_bar(stat="identity") + theme_bw() 
 tunniga2 %>% ggplot(aes(x=hour, y = mitu)) + geom_bar(stat="identity") + theme_bw()
 tunniga3 %>% ggplot(aes(x=hour, y = mitu, fill = SyyteoLiik)) + geom_bar(position = position_dodge(width = 0.8),stat="identity") + 
-  theme_bw() + xlab("Kellaaeg") + ylab("") + scale_fill_manual(values=c("#2E86C1", "#BB8FCE"), name="",
-                                                               labels=c("Kuritegu", "Väärtegu"))#+
+  theme_bw() + xlab("Hour") + ylab("") + scale_fill_manual(values=c("#2E86C1", "#BB8FCE"), name="",
+                                                               labels=c("Crime", "Misdemeanor"))#+
 
+andmed %>% group_by(ToimNadalapaev)
+aa <- andmed %>% group_by(ToimNadalapaev, SyyteoLiik) %>% summarise(mitu = n())
+aa %>% mutate(ToimNadalapaev = factor(ToimNadalapaev,levels = c( 
+                                "Esmaspäev", "Teisipäev", "Kolmapäev", 
+                                "Neljapäev", "Reede     ", "Laupäev  ", 
+                                "Pühapäev"))) %>% 
+  mutate(ToimNadalapaev = case_when(ToimNadalapaev == "Esmaspäev" ~ "Monday",
+                                    ToimNadalapaev == "Teisipäev" ~ "Tuesday",
+                                    ToimNadalapaev == "Kolmapäev" ~ "Wednesday",
+                                    ToimNadalapaev == "Neljapäev" ~ "Thursday",
+                                    ToimNadalapaev == "Reede     " ~ "Friday",
+                                    ToimNadalapaev == "Laupäev  " ~ "Saturday",
+                                    ToimNadalapaev == "Pühapäev" ~ "Sunday")) %>%
+  mutate(ToimNadalapaev = factor(ToimNadalapaev,levels = c( 
+                                      "Monday", "Tuesday","Wednesday","Thursday" , "Friday", "Saturday","Sunday"))) %>% 
+  ggplot(aes(x=ToimNadalapaev, y = mitu, fill = SyyteoLiik)) + geom_bar(position = position_dodge(width = 0.8),stat="identity") + 
+  theme_bw() + xlab("Day") + ylab("") + scale_fill_manual(values=c("#2E86C1", "#BB8FCE"), name="",
+                                                               labels=c("Crime", "Misdemeanor"))#+
+andmed %>% group_by(MaakondNimetus, SyyteoLiik) %>% summarise(mitu = n()) %>% 
+  ggplot(aes(x=MaakondNimetus, y = mitu, fill = SyyteoLiik)) + geom_bar(position = position_dodge(width = 0.8),stat="identity") + 
+  theme_bw() + xlab("Day") + ylab("") + scale_fill_manual(values=c("#2E86C1", "#BB8FCE"), name="",
+                                                          labels=c("Crime", "Misdemeanor"))#+
+
+andmed %>% group_by(MaakondNimetus, SyyteoLiik) %>% summarise(mitu = n()) %>% 
+  ggplot(aes(y=MaakondNimetus, x="", fill = MaakondNimetus)) + geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)
 
 #  theme(legend.title=element_blank(),labels=c("Kuritegu", "Väärtegu"))
 
